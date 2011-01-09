@@ -1,4 +1,3 @@
-
 window.addEvent('domready', function() {
 	$('header').getElement('div').inject($('header'), 'top').setStyles({
 		'float': 'right',

@@ -1,13 +1,15 @@
 <?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 /**
- * TYPOlight webCMS
- * Copyright (C) 2005 Leo Feyer
+ * Contao Open Source CMS
+ * Copyright (C) 2005-2010 Leo Feyer
+ *
+ * Formerly known as TYPOlight Open Source CMS.
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
- * version 2.1 of the License, or (at your option) any later version.
+ * version 3 of the License, or (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,14 +18,14 @@
  * 
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
- * Software Foundation website at http://www.gnu.org/licenses/.
+ * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Andreas Schempp 2008
+ * @copyright  Andreas Schempp 2008-2010
  * @author     Andreas Schempp <andreas@schempp.ch>
- * @license    LGPL
+ * @license    http://opensource.org/licenses/lgpl-3.0.html
+ * @version    $Id$
  */
-
 
 
 class BackendBreadcrumb extends Backend
@@ -42,9 +44,6 @@ class BackendBreadcrumb extends Backend
 	 */
 	public function generate()
 	{
-		$this->import('Database', 'Database');
-		$this->import('Input', 'Input');
-		
 		$do = $this->Input->get('do');
 		$id = $this->Input->get('id');
 		$levels = array();
@@ -194,7 +193,7 @@ class BackendBreadcrumb extends Backend
 			krsort($levels);
 		}
 
-		echo '<a href="typolight/main.php" class="navigation home" title="Landkarten" style="background-image:url(\'system/modules/zz_bebreadcrumb/html/home.gif\');" onclick="this.blur();">Home</a>';
+		echo '<a href="' . $this->Environment->script . '" class="navigation home" title="Landkarten" style="background-image:url(\'system/modules/zz_bebreadcrumb/html/home.gif\');" onclick="this.blur();">Home</a>';
 		
 		
 		if (strlen($do))
@@ -203,7 +202,7 @@ class BackendBreadcrumb extends Backend
 			if (strlen($icon))
 				$style = ' style="background-image: url('.$icon.')"';
 			
-			$href = 'typolight/main.php?do='.$do;
+			$href = $this->Environment->script . '?do='.$do;
 			echo ' &raquo; <a href="'.$href.'" class="navigation '.$do.'"'.$style.'>'.$GLOBALS['TL_LANG']['MOD'][$do][0].'</a>';
 			
 			if (count($levels))
@@ -284,7 +283,7 @@ class BackendBreadcrumb extends Backend
 			$href .= implode('&amp;', $queries) . '&amp;';
 		}
 		
-		return $this->Environment->base . 'typolight/main.php' . $href . str_replace(' ', '%20', $strRequest);
+		return $this->Environment->base . $this->Environment->script  . $href . str_replace(' ', '%20', $strRequest);
 	}
 
 }
