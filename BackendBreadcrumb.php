@@ -15,7 +15,7 @@
  * @copyright  terminal42 gmbh 2009-2013
  * @author        Andreas Schempp <andreas.schempp@terminal42.ch>
  * @author        Kamil Kuźmiński <kamil.kuzminski@terminal42.ch>
- * @license      LGPL
+ * @license       LGPL
  */
 
 
@@ -45,15 +45,12 @@ class BackendBreadcrumb extends Backend
             while ($parent) {
                 $moduleGroup = $this->findBackendModuleGroup($do);
 
-                if (strlen($ptable))
-                    $table = $ptable;
-                else if (strlen($this->Input->get('table')) && strlen($this->Input->get('act')))
+                if (strlen($this->Input->get('table')) && strlen($this->Input->get('act'))) {
                     $table = $this->Input->get('table');
-                else
+                }
+                else {
                     $table = $GLOBALS['BE_MOD'][$moduleGroup][$do]['tables'][0];
-
-                if (strlen($pid))
-                    $id = $pid;
+                }
 
                 $this->loadDataContainer($table);
                 $this->loadLanguageFile($table);
@@ -87,7 +84,6 @@ class BackendBreadcrumb extends Backend
                         ->execute()
                         ->fetchAssoc();
 
-                    $pid = $row['pid'];
                     $level['row'] = $row;
 
                     if ($GLOBALS['TL_DCA'][$table]['list']['label']['fields'] && count($GLOBALS['TL_DCA'][$table]['list']['label']['fields'])) {
@@ -196,7 +192,7 @@ class BackendBreadcrumb extends Backend
     }
 
     /**
-     * Find a particluar backend module
+     * Find a particular backend module
      */
     protected function findBackendModuleGroup($strModule)
     {
@@ -210,8 +206,8 @@ class BackendBreadcrumb extends Backend
 
     /**
      * Overwrite parent method to allow any URL
-     * @param string
-     * @return string
+     * @param   string
+     * @return  string
      */
     public static function addToUrl($strRequest, $strUrl = '')
     {
