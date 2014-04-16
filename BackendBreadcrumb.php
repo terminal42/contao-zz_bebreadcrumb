@@ -52,8 +52,8 @@ class BackendBreadcrumb extends Backend
                     $table = $GLOBALS['BE_MOD'][$moduleGroup][$do]['tables'][0];
                 }
 
-                $this->loadDataContainer($table);
-                $this->loadLanguageFile($table);
+	            $this->loadLanguageFile($table);
+	            $this->loadDataContainer($table);
                 $level = array
                 (
                     'id'          => $id,
