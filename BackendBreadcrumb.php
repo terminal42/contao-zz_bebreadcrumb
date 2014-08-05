@@ -151,8 +151,8 @@ class BackendBreadcrumb extends Backend
             '<a href="%s" class="navigation home" title="%s" style="background-image:url(\'system/themes/%s/images/home.gif\');">%s</a>',
             $this->Environment->script,
             $GLOBALS['TL_LANG']['MSC']['homeTitle'],
-            $GLOBALS['TL_LANG']['MSC']['home'],
-            $strTheme
+            $strTheme,
+            $GLOBALS['TL_LANG']['MSC']['home']
         );
 
 
