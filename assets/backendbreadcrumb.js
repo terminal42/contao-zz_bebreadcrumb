@@ -6,6 +6,6 @@ window.addEvent('domready', function() {
             'background-color': '#FFFFFF'
         });
 
-        document.getElement('.mod_backendbreadcrumb').inject(header, 'bottom').setStyle('display', 'block');
+        document.id('mod_backendbreadcrumb').inject(header, 'bottom').setStyle('display', 'block');
     }
 });
