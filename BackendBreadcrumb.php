@@ -154,7 +154,15 @@ class BackendBreadcrumb extends Backend
             krsort($levels);
         }
 
-        echo '<a href="' . $this->Environment->script . '" class="navigation home" title="Landkarten" style="background-image:url(\'system/modules/zz_bebreadcrumb/assets/home.gif\');" onclick="this.blur();">Home</a>';
+        $strTheme = \Backend::getTheme();
+
+        echo sprintf(
+            '<a href="%s" class="navigation home" title="%s" style="background-image:url(\'system/themes/%s/images/home.gif\');">%s</a>',
+            $this->Environment->script,
+            $GLOBALS['TL_LANG']['MSC']['homeTitle'],
+            $GLOBALS['TL_LANG']['MSC']['home'],
+            $strTheme
+        );
 
 
         if (strlen($do)) {
