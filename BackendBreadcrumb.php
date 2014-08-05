@@ -170,11 +170,11 @@ class BackendBreadcrumb extends Backend
                     $style = '';
                     switch ($level['table']) {
                         case 'tl_page':
-                            $style = ' style="background:url(system/themes/default/images/' . $row['type'] . '.gif) no-repeat left center; padding-left: 20px"';
+                            $style = ' style="background:url(system/themes/' . $strTheme . '/images/' . $row['type'] . '.gif) no-repeat left center; padding-left: 20px"';
                             break;
 
                         case 'tl_article':
-                            $style = ' style="background:url(system/themes/default/images/articles.gif) no-repeat left center; padding-left: 20px"';
+                            $style = ' style="background:url(system/themes/' . $strTheme . '/images/articles.gif) no-repeat left center; padding-left: 20px"';
                             break;
                     }
 
