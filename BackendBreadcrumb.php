@@ -31,24 +31,22 @@ class BackendBreadcrumb extends Backend
         }
 
         $do = $this->Input->get('do');
+        $moduleGroup = $this->findBackendModuleGroup($do);
         $id = $this->Input->get('id');
+        $skipFirst = $this->Input->get('act') == '';
         $levels = array();
 
         if (strlen($do) && strlen($id)) {
             $parent = true;
+            $tables = $GLOBALS['BE_MOD'][$moduleGroup][$do]['tables'];
+            $table = $this->Input->get('table') ?: $tables[0];
 
             while ($parent) {
-                $moduleGroup = $this->findBackendModuleGroup($do);
-
-                if (strlen($this->Input->get('table')) && strlen($this->Input->get('act'))) {
-                    $table = $this->Input->get('table');
-                }
-                else {
-                    $table = $GLOBALS['BE_MOD'][$moduleGroup][$do]['tables'][0];
-                }
-
                 $this->loadDataContainer($table);
                 $this->loadLanguageFile($table);
+
+                $ptable = $GLOBALS['TL_DCA'][$table]['config']['ptable'];
+
                 $level = array
                 (
                     'id'          => $id,
@@ -56,12 +54,6 @@ class BackendBreadcrumb extends Backend
                     'moduleGroup' => $moduleGroup,
                     'href'        => $GLOBALS['TL_DCA'][$table]['list']['operations']['edit']['href'],
                 );
-
-                $ptable = $GLOBALS['TL_DCA'][$table]['config']['ptable'];
-                $tables = $GLOBALS['BE_MOD'][$moduleGroup][$do]['tables'];
-
-                if (!strlen($ptable))
-                    $parent = false;
 
                 if ($GLOBALS['TL_DCA'][$table]['config']['dataContainer'] != 'Table') {
                     if ($do == 'tasks') {
@@ -71,6 +63,12 @@ class BackendBreadcrumb extends Backend
                         $level['label'] = $id;
                     }
                 } else {
+                    if ($skipFirst && $ptable != '') {
+                        $skipFirst = false;
+                        $table = $ptable;
+                        continue;
+                    }
+
                     if (in_array($table, $tables))
                         $level['do'] = $do;
 
@@ -144,6 +142,13 @@ class BackendBreadcrumb extends Backend
                 }
 
                 $levels[] = $level;
+
+                if ($ptable != '') {
+                    $table = $ptable;
+                    $id = $row['pid'];
+                } else {
+                    $parent = false;
+                }
             }
 
             krsort($levels);
@@ -162,7 +167,7 @@ class BackendBreadcrumb extends Backend
 
 
         if (strlen($do)) {
-            $icon = $GLOBALS['BE_MOD'][$this->findBackendModuleGroup($do)][$do]['icon'];
+            $icon = $GLOBALS['BE_MOD'][$moduleGroup][$do]['icon'];
             if (strlen($icon))
                 $style = ' style="background-image: url(' . $icon . ')"';
 
