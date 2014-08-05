@@ -10,6 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
+ * forked by Ingolf Steinhardt <contao@e-spin.de> 
  *
  * PHP version 5
  * @copyright  terminal42 gmbh 2009-2013
@@ -35,6 +36,7 @@ class BackendBreadcrumb extends Backend
 	 */
 	public function generate()
 	{
+		$output = '';
 		$do = $this->Input->get('do');
 		$id = $this->Input->get('id');
 		$levels = array();
@@ -184,7 +186,7 @@ class BackendBreadcrumb extends Backend
 			krsort($levels);
 		}
 
-		echo '<a href="' . $this->Environment->script . '" class="navigation home" title="Landkarten" style="background-image:url(\'system/modules/zz_bebreadcrumb/assets/home.gif\');" onclick="this.blur();">Home</a>';
+		$output .= '<a href="' . $this->Environment->script . '" class="navigation home" title="' . $GLOBALS['TL_LANG']['MSC']['home'] . '" style="background-image:url(\'system/themes/default/images/home.gif\');" onclick="this.blur();">' . $GLOBALS['TL_LANG']['MSC']['home'] . '</a>';
 		
 		
 		if (strlen($do))
@@ -194,7 +196,7 @@ class BackendBreadcrumb extends Backend
 				$style = ' style="background-image: url('.$icon.')"';
 			
 			$href = $this->Environment->script . '?do='.$do;
-			echo ' &raquo; <a href="'.$href.'" class="navigation '.$do.'"'.$style.'>'.$GLOBALS['TL_LANG']['MOD'][$do][0].'</a>';
+			$output .= ' &raquo; <a href="'.$href.'" class="navigation '.$do.'"'.$style.'>'.$GLOBALS['TL_LANG']['MOD'][$do][0].'</a>';
 			
 			if (count($levels))
 			{
@@ -216,17 +218,18 @@ class BackendBreadcrumb extends Backend
 					if (strlen($level['do']))
 					{
 						$href = $this->addToUrl($level['href'].'&amp;id='.$level['id'], $href);
-						echo ' &raquo; <a href="'.$href.'"'.$style.'>'.$level['label'].'</a>';
+						$output .= ' &raquo; <a href="'.$href.'"'.$style.'>'.$level['label'].'</a>';
 					}
 					
 					// Level is not part of this module. Do not link.
 					else
 					{
-						echo ' &raquo; <span'.$style.'>'.$level['label'].'</span>';
+						$output .= ' &raquo; <span'.$style.'>'.$level['label'].'</span>';
 					}
 				}
 			}
 		}
+		echo $output;
 	}
 	
 	/**

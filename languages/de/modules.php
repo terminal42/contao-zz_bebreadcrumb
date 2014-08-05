@@ -10,6 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
+ * forked by Ingolf Steinhardt <contao@e-spin.de> 
  *
  * PHP version 5
  * @copyright  terminal42 gmbh 2009-2013
@@ -22,5 +23,5 @@
 /**
  * Extension name
  */
-$GLOBALS['TL_LANG']['MOD']['zz_bebreadcrumb'] = array('Backend Breadcrumb');
+$GLOBALS['TL_LANG']['MOD']['zz_bebreadcrumb'] = array('Backend Breadcrumb', 'Backend Breadcrumb');
 
