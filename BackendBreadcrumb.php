@@ -24,8 +24,12 @@ class BackendBreadcrumb extends Backend
     /**
      * Generate the backend breadcrumb
      */
-    public function generate()
+    public function generate($strBuffer, $strTemplate)
     {
+        if ($strTemplate != 'be_main') {
+            return $strBuffer;
+        }
+
         $do = $this->Input->get('do');
         $id = $this->Input->get('id');
         $levels = array();
@@ -146,8 +150,9 @@ class BackendBreadcrumb extends Backend
         }
 
         $strTheme = \Backend::getTheme();
+        $strMenu = '<div id="mod_backendbreadcrumb" style="text-align: left; display: none">';
 
-        echo sprintf(
+        $strMenu .= sprintf(
             '<a href="%s" class="navigation home" title="%s" style="background-image:url(\'system/themes/%s/images/home.gif\');">%s</a>',
             $this->Environment->script,
             $GLOBALS['TL_LANG']['MSC']['homeTitle'],
@@ -162,7 +167,7 @@ class BackendBreadcrumb extends Backend
                 $style = ' style="background-image: url(' . $icon . ')"';
 
             $href = $this->Environment->script . '?do=' . $do;
-            echo ' &raquo; <a href="' . $href . '" class="navigation ' . $do . '"' . $style . '>' . $GLOBALS['TL_LANG']['MOD'][$do][0] . '</a>';
+            $strMenu .= ' &raquo; <a href="' . $href . '" class="navigation ' . $do . '"' . $style . '>' . $GLOBALS['TL_LANG']['MOD'][$do][0] . '</a>';
 
             if (count($levels)) {
                 foreach ($levels as $level) {
@@ -180,14 +185,20 @@ class BackendBreadcrumb extends Backend
                     // Level is part of this module
                     if (strlen($level['do'])) {
                         $href = $this->addToUrl($level['href'] . '&amp;id=' . $level['id'], $href);
-                        echo ' &raquo; <a href="' . $href . '"' . $style . '>' . $level['label'] . '</a>';
+                        $strMenu .= ' &raquo; <a href="' . $href . '"' . $style . '>' . $level['label'] . '</a>';
                     } // Level is not part of this module. Do not link.
                     else {
-                        echo ' &raquo; <span' . $style . '>' . $level['label'] . '</span>';
+                        $strMenu .= ' &raquo; <span' . $style . '>' . $level['label'] . '</span>';
                     }
                 }
             }
         }
+
+        $strMenu .= '</div>';
+
+        $strBuffer = str_replace('<div id="tl_navigation">', '<div id="tl_navigation">'.$strMenu, $strBuffer);
+
+        return $strBuffer;
     }
 
     /**

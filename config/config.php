@@ -9,8 +9,7 @@
  * @link       http://github.com/terminal42/contao-zz_bebreadcrumb
  */
 
-
-/**
- * Extension name
- */
-$GLOBALS['TL_LANG']['MOD']['zz_bebreadcrumb'] = array('Backend Breadcrumb');
+if (TL_MODE == 'BE') {
+    $GLOBALS['TL_HOOKS']['outputBackendTemplate'][] = array('BackendBreadcrumb', 'generate');
+    $GLOBALS['TL_JAVASCRIPT']['backendbreadcrumb'] = 'system/modules/zz_bebreadcrumb/assets/backendbreadcrumb.js';
+}
