@@ -155,7 +155,7 @@ class BackendBreadcrumb extends Backend
         }
 
         $strTheme = \Backend::getTheme();
-        $strMenu = '<div id="mod_backendbreadcrumb" style="text-align: left; display: none">';
+        $strMenu = '<div id="mod_backendbreadcrumb" style="text-align: left; display: none; padding: 7px">';
 
         $strMenu .= sprintf(
             '<a href="%s" class="navigation home" title="%s" style="background-image:url(\'system/themes/%s/images/home.gif\');">%s</a>',
@@ -201,7 +201,7 @@ class BackendBreadcrumb extends Backend
 
         $strMenu .= '</div>';
 
-        $strBuffer = str_replace('<div id="tl_navigation">', '<div id="tl_navigation">'.$strMenu, $strBuffer);
+        $strBuffer = str_replace('<div id="left">', '<div id="left">'.$strMenu, $strBuffer);
 
         return $strBuffer;
     }
